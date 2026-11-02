@@ -1,0 +1,27 @@
+{
+  "name": "com.skykim.piper-unity",
+  "version": "1.0.0",
+  "displayName": "Piper Unity TTS",
+  "description": "Local, on-device neural text-to-speech with Piper and espeak-ng. Runs ONNX voice models through Unity Inference Engine on Windows, macOS and Android.",
+  "unity": "6000.0",
+  "license": "MIT",
+  "documentationUrl": "https://github.com/skykim/piper-unity",
+  "keywords": [
+    "tts",
+    "text to speech",
+    "piper",
+    "espeak",
+    "speech",
+    "voice",
+    "inference"
+  ],
+  "author": {
+    "name": "skykim",
+    "url": "https://github.com/skykim/piper-unity"
+  },
+  "dependencies": {
+    "com.unity.ai.inference": "2.2.1",
+    "com.unity.nuget.newtonsoft-json": "3.2.1",
+    "com.unity.ugui": "2.0.0"
+  }
+}

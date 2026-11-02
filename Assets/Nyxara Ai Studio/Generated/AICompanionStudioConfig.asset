@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6422ddd939edcea47b1cb19ad196b857, type: 3}
+  m_Name: AICompanionStudioConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Nyxara.AICompanion.Studio.AICompanionStudioConfig
+  characterName: Nyxara
+  studioRootName: NyxaraStudioRoot
+  sourceCharacterPrefab: {fileID: 919132149155446097, guid: 4fde7f8b033e0a44a95e3f2282bb68ea, type: 3}
+  sourceIsExistingRootPrefab: 0
+  preferredFaceRendererPath: Nyxara Head.Shape
+  playerTransform: {fileID: 0}
+  characterProfile: {fileID: 11400000, guid: 2f70b1021184d3249834dacef0b63b7b, type: 2}
+  llmModelPath: Models/Qwen3.5-0.8B-Q4_K_M.gguf
+  whisperModelRelativePath: Speech/ggml-tiny.bin
+  ttsEnabled: 1
+  hasMigratedLegacyTtsConfiguration: 1
+  piperExecutablePath: Speech/PiperRuntime/piper/piper.exe
+  piperVoicePath: Speech/Piper/clean100.onnx
+  createSceneInstance: 1
+  saveRootPrefab: 1
+  createProfileIfMissing: 1
+  autoAttachBootstrap: 1
+  createStudioEnvironment: 1
+  createStudioCamera: 1
+  createStudioLights: 1
+  enableRuntimeConversationOverlay: 1
+  showRuntimeConversationOverlay: 1
+  enableSmartVoiceCapture: 1
+  runtimeMicHoldKey: 118
+  runtimePromptPopupKey: 116
+  llmContextSize: 4096
+  llmNumThreads: -1
+  llmNumPredict: 96
+  llmCachePrompt: 1
+  llmTemperature: 0.2
+  llmTopP: 0.85
+  llmTopK: 30
+  llmMinP: 0.08
+  llmRepeatPenalty: 1.05
+  characterLocalPosition: {x: 0, y: 0, z: 0}
+  characterLocalEuler: {x: 0, y: 0, z: 0}
+  focusHeightOffset: 1.55
+  cameraPivotOffset: {x: 0, y: -0.16, z: 0}
+  cameraDistance: 1.35
+  cameraHeight: 1.6
+  cameraYaw: 0
+  cameraFieldOfView: 26
+  keyLightIntensity: 2.2
+  fillLightIntensity: 0.9
+  rimLightIntensity: 1.35
+  studioBackgroundColor: {r: 0.18, g: 0.18, b: 0.2, a: 1}
+  rootFolder: Assets/Nyxara AI Studio
+  prefabFolder: Assets/Nyxara AI Studio/Generated/Prefabs
+  companionPrefabFolder: Assets/Nyxara AI Studio/Generated/Companions
+  profileFolder: Assets/Nyxara AI Studio/Generated/Profiles
+  generatedFolder: Assets/Nyxara AI Studio/Generated
+  expressionFolder: Assets/Nyxara AI Studio/Generated/Expressions

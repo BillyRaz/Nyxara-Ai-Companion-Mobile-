@@ -1,0 +1,65 @@
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+# Unity cache and IDE files
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Package/cache noise
+Assets/AssetStoreTools*
+
+
+# Local AI assets and generated audio
+Assets/StreamingAssets/Speech/PiperVoices/*.onnx
+Assets/StreamingAssets/Speech/PiperVoices/*.onnx.meta
+Assets/StreamingAssets/Speech/PiperVoices/*.json
+Assets/StreamingAssets/Speech/PiperVoices/*.json.meta
+Assets/StreamingAssets/Speech/*.bin
+Assets/StreamingAssets/Speech/*.bin.meta
+Assets/StreamingAssets/Speech/*.wav
+# LLMUnity desktop and Apple platform runtimes
+Assets/StreamingAssets/LlamaLib-v*/linux-x64/
+Assets/StreamingAssets/LlamaLib-v*/win-x64/
+Assets/StreamingAssets/LlamaLib-v*/ios-arm64/
+Assets/StreamingAssets/LlamaLib-v*/osx-arm64/
+Assets/StreamingAssets/LlamaLib-v*/osx-universal/
+Assets/StreamingAssets/LlamaLib-v*/osx-x64/
+Assets/StreamingAssets/LlamaLib-v*/visionos-arm64/
+
+# Blender backup files
+*.blend1
+
+# External cloned dependencies and downloads
+External/Repos/
+*.zip
+*.7z
+
+# Python caches
+__pycache__/
+*.pyc

@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2002ca6f4f573042a89f7472cccf0be, type: 3}
+  m_Name: Nyxara_LipSyncData
+  m_EditorClassIdentifier: Assembly-CSharp::Nyxara.AICompanion.LipSync.LipSyncData
+  visemeMappings:
+  - viseme: 1
+    blendshapeName: jawOpen
+    intensity: 27.9
+    jawOpenContribution: 1
+  - viseme: 7
+    blendshapeName: jawOpen, mouthLowerDownLeft, mouthLowerDownRight
+    intensity: 24
+    jawOpenContribution: 0.85
+  - viseme: 2
+    blendshapeName: mouthSmileLeft, mouthSmileRight, mouthStretchLeft, mouthStretchRight
+    intensity: 40
+    jawOpenContribution: 0.15
+  - viseme: 6
+    blendshapeName: mouthStretchLeft, mouthStretchRight, mouthSmileLeft, mouthSmileRight
+    intensity: 28
+    jawOpenContribution: 0.12
+  - viseme: 3
+    blendshapeName: mouthPucker
+    intensity: 80
+    jawOpenContribution: 0.2
+  - viseme: 4
+    blendshapeName: mouthFunnel, mouthPucker
+    intensity: 59.4
+    jawOpenContribution: 0.3
+  - viseme: 11
+    blendshapeName: mouthFunnel, mouthPucker
+    intensity: 52
+    jawOpenContribution: 0.25
+  - viseme: 8
+    blendshapeName: mouthFunnel, mouthPucker, jawOpen
+    intensity: 50
+    jawOpenContribution: 0.45
+  - viseme: 12
+    blendshapeName: mouthFunnel, mouthSmileLeft, mouthSmileRight
+    intensity: 42
+    jawOpenContribution: 0.2
+  - viseme: 25
+    blendshapeName: mouthPucker
+    intensity: 62
+    jawOpenContribution: 0.08
+  - viseme: 5
+    blendshapeName: mouthStretchLeft, mouthStretchRight, mouthDimpleLeft, mouthDimpleRight
+    intensity: 35
+    jawOpenContribution: 0.15
+  - viseme: 10
+    blendshapeName: mouthFunnel, mouthStretchLeft, mouthStretchRight
+    intensity: 30
+    jawOpenContribution: 0.12
+  - viseme: 15
+    blendshapeName: mouthPressLeft, mouthPressRight
+    intensity: 30
+    jawOpenContribution: 0.05
+  - viseme: 13
+    blendshapeName: tongueOut, jawOpen
+    intensity: 24
+    jawOpenContribution: 0.35
+  - viseme: 14
+    blendshapeName: tongueOut, jawOpen
+    intensity: 18
+    jawOpenContribution: 0.25
+  - viseme: 16
+    blendshapeName: mouthStretchLeft, mouthStretchRight
+    intensity: 20
+    jawOpenContribution: 0.06
+  - viseme: 17
+    blendshapeName: mouthPucker, mouthFunnel
+    intensity: 26
+    jawOpenContribution: 0.08
+  - viseme: 18
+    blendshapeName: jawOpen
+    intensity: 12
+    jawOpenContribution: 0.3
+  - viseme: 19
+    blendshapeName: mouthClose
+    intensity: 36.7
+    jawOpenContribution: 0
+  - viseme: 26
+    blendshapeName: mouthClose
+    intensity: 42
+    jawOpenContribution: 0
+  - viseme: 20
+    blendshapeName: mouthClose, jawOpen
+    intensity: 18
+    jawOpenContribution: 0.1
+  - viseme: 21
+    blendshapeName: mouthClose, jawOpen
+    intensity: 16
+    jawOpenContribution: 0.14
+  - viseme: 22
+    blendshapeName: tongueOut, jawOpen
+    intensity: 16
+    jawOpenContribution: 0.18
+  - viseme: 23
+    blendshapeName: mouthPucker, jawOpen
+    intensity: 20
+    jawOpenContribution: 0.14
+  - viseme: 24
+    blendshapeName: mouthSmileLeft, mouthSmileRight, mouthStretchLeft, mouthStretchRight
+    intensity: 24
+    jawOpenContribution: 0.08
+  - viseme: 27
+    blendshapeName: jawOpen, mouthClose
+    intensity: 12
+    jawOpenContribution: 0.08
+  - viseme: 28
+    blendshapeName: jawOpen
+    intensity: 16
+    jawOpenContribution: 0.18
+  - viseme: 0
+    blendshapeName: mouthClose
+    intensity: 0
+    jawOpenContribution: 0
+  smoothTime: 0.08
+  jawOpenMultiplier: 0.6
+  responseStart: 0
+  responseEnd: 1
+  responseFalloff: 1.35
+  responseSmoothing: 12
+  showDebugInfo: 0

@@ -1,0 +1,22 @@
+Assets/AICompanion/Runtime
+Assets/AICompanion/Editor
+Assets/AICompanionLab/Editor
+Assets/AICompanionLab/ScriptableObjects
+Assets/AICompanionLab/Scripts
+Assets/AICompanion/Mesh/NyxaraNew
+Assets/AICompanion/Audio/Testing Audio/Nyxara Testing Ai Voice.wav
+Assets/AICompanionStudio/Expressions
+Assets/AICompanionStudio/Profiles/NyxaraProfile.asset
+Assets/AICompanionStudio/Companions/NyxaraCompanion_CompanionRoot.prefab
+Assets/AICompanionStudio/Prefabs/NyxaraCompanion_StudioRoot.prefab
+Assets/AICompanionStudio/Generated/NyxaraCompanion_LipSyncData.asset
+Assets/AICompanionStudio/Generated/Nyxara_LipSyncData.asset
+README.md
+QUICK_START.md
+KNOWN_LIMITATIONS.md
+WHAT_IS_INCLUDED.md
+NEXT_UPDATES.md
+ROADMAP.md
+CHANGELOG.md
+LICENSE.txt
+RELEASE_CHECKLIST.md

@@ -1,0 +1,11 @@
+Confirmed safe by owner review:
+
+- Assets/AICompanion/Mesh/NyxaraNew/
+- Assets/AICompanion/Audio/Testing Audio/Nyxara Testing Ai Voice.wav
+- Nyxara-named assets you created
+
+Keep excluded:
+
+- Assets/AICompanion/Mesh/Nyxaraold currupted but stable and working right now/
+- Assets/AICompanion/Mesh/Realisticgirl_Fbx/
+- BuisnessGirl assets

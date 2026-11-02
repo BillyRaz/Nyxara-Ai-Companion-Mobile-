@@ -1,0 +1,53 @@
+Nyxara AI Studio License
+
+Copyright (c) 2026 RAZ Studio
+
+All rights reserved.
+
+---
+
+Permission
+
+You are granted a non-exclusive, non-transferable license to use Nyxara AI Studio in personal or commercial projects.
+
+You may:
+
+- Use the software in personal and commercial Unity projects
+- Modify the software for your own internal use
+- Integrate the software into your own projects
+
+---
+
+Restrictions
+
+You may NOT:
+
+- Resell, redistribute, or sublicense Nyxara AI Studio as a standalone product
+- Share the source files publicly or privately
+- Include the tool in asset packs, templates, or competing tools
+- Claim ownership of the original software
+
+---
+
+Third-Party Dependencies
+
+Nyxara AI Studio relies on external tools and models such as LLMs, Whisper, and Piper.
+
+These are NOT included in this package and are subject to their own licenses.
+
+Users are responsible for complying with those licenses.
+
+---
+
+No Warranty
+
+This software is provided "as is", without warranty of any kind.
+
+The author is not liable for any damages or issues arising from its use.
+
+---
+
+Contact
+
+For support or inquiries, contact:
+RAZ Studio

@@ -1,0 +1,13 @@
+Review these before exporting:
+
+- Assets/AICompanionStudio/Companions/NyxaraCompanion_CompanionRoot.prefab
+- Assets/AICompanionStudio/Prefabs/NyxaraCompanion_StudioRoot.prefab
+- Assets/AICompanionStudio/Generated/NyxaraCompanion_LipSyncData.asset
+- Assets/AICompanionStudio/Generated/Nyxara_LipSyncData.asset
+
+Checks:
+
+- confirm they reference only Nyxara-owned safe assets
+- confirm they do not point to excluded third-party characters
+- confirm they do not store machine-specific absolute paths
+- confirm they still work when excluded external folders are not present

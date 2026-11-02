@@ -1,0 +1,18 @@
+External/
+Library/
+Logs/
+Temp/
+UserSettings/
+Assets/AICompanion/Mesh/Nyxaraold currupted but stable and working right now/
+Assets/AICompanion/Mesh/Realisticgirl_Fbx/
+Assets/AICompanionStudio/Companions/BuisnessGirl_CompanionRoot.prefab
+Assets/AICompanionStudio/Prefabs/BuisnessGirl_StudioRoot.prefab
+Assets/AICompanionStudio/Generated/BuisnessGirl_LipSyncData.asset
+Assets/AICompanionStudio/Generated/AICompanionStudioConfig.asset
+Assets/StreamingAssets/Models/
+Assets/StreamingAssets/Speech/PiperVoices/
+Assets/StreamingAssets/Speech/ggml-tiny.bin
+Assets/StreamingAssets/LlamaLib-v2.0.5/
+Assets/TutorialInfo/
+
+Do not export folders from this list into the public V1 package.
