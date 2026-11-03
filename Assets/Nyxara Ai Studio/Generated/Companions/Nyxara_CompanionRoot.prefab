@@ -1172,7 +1172,7 @@ Transform:
   m_GameObject: {fileID: 1512078651793299574}
   serializedVersion: 2
   m_LocalRotation: {x: -0.047040753, y: 0.9419751, z: -0.2970036, w: -0.14919421}
-  m_LocalPosition: {x: 0.63326734, y: 3.6962545, z: 1.9323425}
+  m_LocalPosition: {x: 0.632933, y: 2.8962543, z: 1.9629627}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1318,7 +1318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: com.whisper.unity::Whisper.WhisperManager
   logLevel: 1
-  modelPath: Whisper/ggml-tiny.bin
+  modelPath: Speech/ggml-tiny.bin
   isModelPathInStreamingAssets: 1
   initOnAwake: 1
   useGpu: 0
@@ -1352,7 +1352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Nyxara.AICompanion.Speech.WhisperMicrophoneInput
   whisperManager: {fileID: 3750508560864472667}
   companionBrain: {fileID: 3962622761610756610}
-  microphoneDevice: 
+  microphoneDevice: Microphone (3- USB Audio Device)
   preferredMicrophoneName: 
   preferDefaultMicrophone: 1
   forceExplicitMicrophoneSelection: 0
@@ -1569,8 +1569,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732792284855723342}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.23951966, y: -0.016944235, z: -0.004180831, w: 0.97073466}
-  m_LocalPosition: {x: 0.054985464, y: 1.441, z: -1.577355}
+  m_LocalRotation: {x: -0.006816526, y: -0.017452, z: -0.0001189829, w: 0.99982446}
+  m_LocalPosition: {x: 0.054651145, y: 1.441, z: -1.5467348}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1706,7 +1706,7 @@ Transform:
   m_GameObject: {fileID: 1778321075024063161}
   serializedVersion: 2
   m_LocalRotation: {x: -0.26744977, y: 0.23255025, z: 0.06668272, w: 0.93270814}
-  m_LocalPosition: {x: -0.9948986, y: 0.93751526, z: -1.8872622}
+  m_LocalPosition: {x: -0.99523294, y: 0.13751507, z: -1.856642}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2585,6 +2585,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Nyxara.AICompanion.Face.ArkItBlendshapeDriver
   targetRenderer: {fileID: 6630873785831564666}
   additionalRenderers:
+  - {fileID: 4277914540319107633}
+  - {fileID: 9059775687051392127}
   - {fileID: 3284595190283236017}
   - {fileID: 230822862879288110}
   - {fileID: 2055515494760104940}
@@ -2648,12 +2650,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nyxara.AICompanion.Expressions.ExpressionLibraryManager
   expressionLibraryPath: Assets/Nyxara AI Studio/Generated/Expressions/Nyxara/Custom_Unknown
+  presetLibrary: []
   targetFaceRenderer: {fileID: 6630873785831564666}
   additionalFaceRenderers:
+  - {fileID: 4277914540319107633}
+  - {fileID: 9059775687051392127}
   - {fileID: 3284595190283236017}
   - {fileID: 230822862879288110}
   - {fileID: 2055515494760104940}
   expressionModeActive: 0
+  expressionIntensity: 1
+  transitionDurationOverride: 0
 --- !u!114 &6847148363130095333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2729,6 +2736,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Nyxara.AICompanion.LipSync.VisemeLipSyncController
   faceRenderer: {fileID: 6630873785831564666}
   additionalFaceRenderers:
+  - {fileID: 4277914540319107633}
+  - {fileID: 9059775687051392127}
   - {fileID: 3284595190283236017}
   - {fileID: 230822862879288110}
   - {fileID: 2055515494760104940}
@@ -2862,7 +2871,7 @@ MonoBehaviour:
   _parallelPrompts: 1
   _contextSize: 4096
   _batchSize: 512
-  _model: Models/Qwen3.5-0.8B-Q4_K_M.gguf
+  _model: Models/Qwen3.5-2B-Q4_K_M.gguf
   _flashAttention: 0
   _reasoning: 0
   _lora: 
@@ -4605,7 +4614,7 @@ Transform:
   m_GameObject: {fileID: 4664016418496605083}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00043755354, y: 2.2623134, z: -0.015307183}
+  m_LocalPosition: {x: 0.000103234335, y: 1.4623132, z: 0.015313084}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6195,7 +6204,7 @@ Transform:
   m_GameObject: {fileID: 7565973886269696064}
   serializedVersion: 2
   m_LocalRotation: {x: 0.20535202, y: -0.15301602, z: 0.032524567, w: 0.966105}
-  m_LocalPosition: {x: 0.7061904, y: 3.2791553, z: -2.1873906}
+  m_LocalPosition: {x: 0.7058561, y: 2.479155, z: -2.1567702}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

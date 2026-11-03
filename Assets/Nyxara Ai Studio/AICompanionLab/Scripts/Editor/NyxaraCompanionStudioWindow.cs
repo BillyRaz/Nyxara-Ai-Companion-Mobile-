@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Bilal Raza
+﻿// Copyright (c) 2026 Bilal Raza
 // Publisher: RAZ Studio
 // Product: Nyxara AI Studio
 
@@ -1045,7 +1045,7 @@ namespace Nyxara.AICompanion.Editor
                         }
                     }
 
-                    if (GUILayout.Button(new GUIContent("−", "Remove this renderer."), GUILayout.Width(24f)))
+                    if (GUILayout.Button(new GUIContent("âˆ’", "Remove this renderer."), GUILayout.Width(24f)))
                     {
                         paths.RemoveAt(i);
                         i--;
@@ -1490,10 +1490,10 @@ namespace Nyxara.AICompanion.Editor
                 : FindFirstObjectByType<PiperTtsService>();
             if (ttsService != null)
             {
-                NyxaraIntegrationValidator.BindInProcessPiperAssets(ttsService);
                 ttsService.TtsEnabled = _config.ttsEnabled;
                 ttsService.PiperExecutablePath = _config.piperExecutablePath;
                 ttsService.VoiceModelPath = _config.piperVoicePath;
+                NyxaraIntegrationValidator.BindInProcessPiperAssets(ttsService);
                 EditorUtility.SetDirty(ttsService);
             }
 

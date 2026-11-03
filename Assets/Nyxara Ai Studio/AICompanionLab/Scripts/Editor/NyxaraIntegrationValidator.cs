@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Bilal Raza
+﻿// Copyright (c) 2026 Bilal Raza
 // Publisher: RAZ Studio
 // Product: Nyxara AI Studio
 
@@ -444,10 +444,6 @@ namespace Nyxara.AICompanion.Editor
                 return false;
             }
 
-            if (ttsService.HasInProcessVoice)
-            {
-                return true;
-            }
 
             var modelPath = ResolveInProcessModelAssetPath(ttsService.VoiceModelPath);
             var model = AssetDatabase.LoadAssetAtPath<ModelAsset>(modelPath);
@@ -455,6 +451,11 @@ namespace Nyxara.AICompanion.Editor
             if (model == null || config == null)
             {
                 return false;
+            }
+
+            if (ttsService.HasInProcessVoice && ttsService.VoiceModel == model && ttsService.VoiceConfig == config)
+            {
+                return true;
             }
 
             ttsService.VoiceModel = model;

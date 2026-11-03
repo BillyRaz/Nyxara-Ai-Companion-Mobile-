@@ -1,4 +1,4 @@
-// Copyright (c) 2026 Bilal Raza
+﻿// Copyright (c) 2026 Bilal Raza
 // Publisher: RAZ Studio
 // Product: Nyxara AI Studio
 
@@ -146,8 +146,9 @@ namespace Nyxara.AICompanion.Editor
                 tts.TtsEnabled = config.ttsEnabled;
                 tts.PiperExecutablePath = config.piperExecutablePath;
                 tts.VoiceModelPath = config.piperVoicePath;
-                AssignAssetReference(tts, "voiceModel", InProcessPiperModelAssetPath);
-                AssignAssetReference(tts, "voiceConfig", InProcessPiperConfigAssetPath);
+                var resolvedModelPath1 = ResolveVoiceModelAssetPath(config.piperVoicePath);
+                AssignAssetReference(tts, "voiceModel", resolvedModelPath1);
+                AssignAssetReference(tts, "voiceConfig", resolvedModelPath1 + ".json");
                 AssignStringField(tts, "espeakDataDirectory", PiperEspeakDataDirectory);
                 AssignIntField(tts, "speakerId", 0);
                 AssignBoolField(tts, "enableDevelopmentCliFallback", false);
@@ -717,8 +718,9 @@ namespace Nyxara.AICompanion.Editor
                 tts.TtsEnabled = config.ttsEnabled;
                 tts.PiperExecutablePath = config.piperExecutablePath;
                 tts.VoiceModelPath = config.piperVoicePath;
-                AssignAssetReference(tts, "voiceModel", InProcessPiperModelAssetPath);
-                AssignAssetReference(tts, "voiceConfig", InProcessPiperConfigAssetPath);
+                var resolvedModelPath1 = ResolveVoiceModelAssetPath(config.piperVoicePath);
+                AssignAssetReference(tts, "voiceModel", resolvedModelPath1);
+                AssignAssetReference(tts, "voiceConfig", resolvedModelPath1 + ".json");
                 AssignStringField(tts, "espeakDataDirectory", PiperEspeakDataDirectory);
                 AssignIntField(tts, "speakerId", 0);
                 AssignBoolField(tts, "enableDevelopmentCliFallback", false);
@@ -1775,6 +1777,25 @@ namespace Nyxara.AICompanion.Editor
 
                 current = next;
             }
+        }
+
+        private static string ResolveVoiceModelAssetPath(string configuredPath)
+        {
+            if (!string.IsNullOrWhiteSpace(configuredPath))
+            {
+                var normalized = configuredPath.Replace('\\', '/').Trim();
+                if (!normalized.StartsWith("Assets/", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    normalized = "Assets/" + normalized.TrimStart('/');
+                }
+
+                if (AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(normalized) != null)
+                {
+                    return normalized;
+                }
+            }
+
+            return InProcessPiperModelAssetPath;
         }
 
         private static void AssignAssetReference(UnityEngine.Object target, string fieldName, string assetPath)

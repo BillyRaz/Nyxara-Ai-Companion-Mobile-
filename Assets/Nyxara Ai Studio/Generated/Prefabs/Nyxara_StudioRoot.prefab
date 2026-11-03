@@ -3106,7 +3106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: com.whisper.unity::Whisper.WhisperManager
   logLevel: 1
-  modelPath: Whisper/ggml-tiny.bin
+  modelPath: Speech/ggml-tiny.bin
   isModelPathInStreamingAssets: 1
   initOnAwake: 1
   useGpu: 0
@@ -3140,7 +3140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Nyxara.AICompanion.Speech.WhisperMicrophoneInput
   whisperManager: {fileID: 4814237739624427613}
   companionBrain: {fileID: 4771968867515422793}
-  microphoneDevice: 
+  microphoneDevice: Microphone (3- USB Audio Device)
   preferredMicrophoneName: 
   preferDefaultMicrophone: 1
   forceExplicitMicrophoneSelection: 0
@@ -5710,6 +5710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Nyxara.AICompanion.Expressions.ExpressionLibraryManager
   expressionLibraryPath: Assets/Nyxara AI Studio/Generated/Expressions/Nyxara/Custom_Unknown
+  presetLibrary: []
   targetFaceRenderer: {fileID: 4309591461656241119}
   additionalFaceRenderers:
   - {fileID: 381244913018941468}
@@ -5718,6 +5719,8 @@ MonoBehaviour:
   - {fileID: 2495541450559506194}
   - {fileID: 2617237362956621970}
   expressionModeActive: 0
+  expressionIntensity: 1
+  transitionDurationOverride: 0
 --- !u!114 &5994512651712498835
 MonoBehaviour:
   m_ObjectHideFlags: 0

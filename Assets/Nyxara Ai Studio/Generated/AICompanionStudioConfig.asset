@@ -31,7 +31,7 @@ MonoBehaviour:
   ttsEnabled: 1
   hasMigratedLegacyTtsConfiguration: 1
   piperExecutablePath: Speech/PiperRuntime/piper/piper.exe
-  piperVoicePath: Assets/Speech/Piper/clean100.onnx
+  piperVoicePath: Assets/Speech/Piper/en_US-amy-medium.onnx
   createSceneInstance: 1
   saveRootPrefab: 1
   createProfileIfMissing: 1
