@@ -528,18 +528,58 @@ namespace Nyxara.AICompanion.Editor
                 return;
             }
 
-            _selectedPreset.displayName = _newPresetName;
-            _selectedPreset.category = _newPresetCategory;
-            _selectedPreset.description = _newPresetDescription;
-            _selectedPreset.transitionTimeInSeconds = _previewTransitionSpeed;
-            _selectedPreset.blendshapeWeights = _currentWeights
+            if (string.IsNullOrWhiteSpace(_newPresetName))
+            {
+                EditorUtility.DisplayDialog("Error", "Please enter a preset name.", "OK");
+                return;
+            }
+
+            var target = _selectedPreset;
+            var existingAssetPath = AssetDatabase.GetAssetPath(target);
+            if (string.IsNullOrEmpty(existingAssetPath))
+            {
+                // The selection is an in-memory catalog preset. Save an overriding
+                // asset instead of mutating the shared read-only instance.
+                var overridePreset = CreateInstance<ExpressionPreset>();
+                overridePreset.presetId = target.presetId;
+                overridePreset.holdDuration = target.holdDuration;
+                overridePreset.autoReturnToNeutral = target.autoReturnToNeutral;
+                overridePreset.preserveIndependentChannels = target.preserveIndependentChannels;
+                overridePreset.thumbnail = target.thumbnail;
+
+                EnsureFolderPathExists(DefaultExpressionFolder);
+                var assetPath = AssetDatabase.GenerateUniqueAssetPath(
+                    $"{DefaultExpressionFolder}/{SanitizeFileName(_newPresetName)}.asset");
+                AssetDatabase.CreateAsset(overridePreset, assetPath);
+                target = overridePreset;
+                _selectedPreset = overridePreset;
+            }
+
+            target.displayName = _newPresetName;
+            target.category = _newPresetCategory;
+            target.description = _newPresetDescription;
+            target.transitionTimeInSeconds = _previewTransitionSpeed;
+            target.blendshapeWeights = _currentWeights
                 .Where(kvp => kvp.Value > 0.01f)
                 .Select(kvp => new BlendshapeWeight { blendshapeName = kvp.Key, weight = kvp.Value })
                 .ToList();
 
-            EditorUtility.SetDirty(_selectedPreset);
+            EditorUtility.SetDirty(target);
             AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
             _libraryManager?.LoadAllPresets();
+            EditorGUIUtility.PingObject(target);
+        }
+
+        private static string SanitizeFileName(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return "Expression";
+            }
+
+            var invalidChars = System.IO.Path.GetInvalidFileNameChars();
+            return new string(value.Select(ch => invalidChars.Contains(ch) ? '_' : ch).ToArray());
         }
 
         private void LoadPresetIntoEditor(ExpressionPreset preset)
@@ -548,10 +588,16 @@ namespace Nyxara.AICompanion.Editor
             _newPresetCategory = preset.category;
             _newPresetDescription = preset.description;
             ResetAllWeights();
+
+            var mesh = _targetRenderer != null ? _targetRenderer.sharedMesh : null;
             foreach (var weight in preset.blendshapeWeights)
             {
-                _currentWeights[weight.blendshapeName] = weight.weight;
-                ApplyWeight(weight.blendshapeName, weight.weight);
+                var index = mesh != null
+                    ? ArkItBlendshapeDriver.FindBlendshapeIndex(mesh, weight.blendshapeName)
+                    : -1;
+                var actualName = index >= 0 ? mesh.GetBlendShapeName(index) : weight.blendshapeName;
+                _currentWeights[actualName] = weight.weight;
+                ApplyWeight(actualName, weight.weight);
             }
         }
 

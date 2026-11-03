@@ -673,6 +673,7 @@ namespace Nyxara.AICompanion.Editor
                 AssignObjectReferenceList(expressionLibrary, "additionalFaceRenderers", additionalFaceRenderers);
                 AssignStringField(expressionLibrary, "expressionLibraryPath", ResolveExpressionLibraryPath(config, faceRenderer, additionalFaceRenderers));
                 AssignBoolField(expressionLibrary, "expressionModeActive", false);
+                NyxaraExpressionLibraryBuilder.SyncPresetLibraryList(expressionLibrary);
             }
 
             if (expressionTriggerPlayer != null)

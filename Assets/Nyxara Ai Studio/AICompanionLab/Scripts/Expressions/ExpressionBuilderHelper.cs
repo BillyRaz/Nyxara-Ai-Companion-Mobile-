@@ -196,24 +196,37 @@ namespace Nyxara.AICompanion.Expressions
                 return false;
             }
 
-            var normalized = value.ToLowerInvariant();
-            return normalized.Contains("mouth") ||
-                   normalized.Contains("jaw") ||
-                   normalized.Contains("lip") ||
-                   normalized.Contains("smile") ||
-                   normalized.Contains("frown") ||
-                   normalized.Contains("funnel") ||
-                   normalized.Contains("pucker") ||
-                   normalized.Contains("shrug") ||
-                   normalized.Contains("roll") ||
-                   normalized.Contains("press") ||
-                   normalized.Contains("tongue") ||
-                   normalized.Contains("viseme") ||
-                   normalized.Contains("aa") ||
-                   normalized.Contains("oh") ||
-                   normalized.Contains("ou") ||
-                   normalized.Contains("ee") ||
-                   normalized.Contains("ih");
+            // Resolve portable FBX names first ("MECHANICGIRL_HEAD.jawOpen").
+            // Matching on canonical prefixes prevents false positives such as
+            // "browOuterUp" (contains "ou") and "cheekSquint" (contains "ee").
+            var canonical = ArkItBlendshapeDriver.GetCanonicalBlendshapeName(value);
+            var normalized = Normalize(canonical).ToLowerInvariant();
+            if (string.IsNullOrEmpty(normalized))
+            {
+                return false;
+            }
+
+            if (normalized.StartsWith("mouth") ||
+                normalized.StartsWith("jaw") ||
+                normalized.StartsWith("tongue") ||
+                normalized.StartsWith("lip") ||
+                normalized.StartsWith("teeth") ||
+                normalized.StartsWith("tooth") ||
+                normalized.StartsWith("viseme") ||
+                normalized.StartsWith("fclmth") ||
+                normalized.StartsWith("vopen") ||
+                normalized.StartsWith("vlip") ||
+                normalized.StartsWith("vdental") ||
+                normalized.StartsWith("vtongue"))
+            {
+                return true;
+            }
+
+            // VTuber / viseme-style single-token shapes. Exact matches only.
+            return normalized is "a" or "e" or "i" or "o" or "u" or
+                "aa" or "ah" or "oh" or "ou" or "ee" or "ih" or "sil" or
+                "pp" or "ff" or "vv" or "th" or "dd" or "kk" or "ch" or
+                "ss" or "nn" or "rr";
         }
 
         public static bool IsEyeRelatedBlendshape(string value)

@@ -29,8 +29,14 @@ namespace Nyxara.AICompanion.Expressions
         public float holdDuration = 1.5f;
         public bool autoReturnToNeutral;
 
+        [Header("Channel Layering")]
+        [Tooltip("When used as a base expression, do not write eye blink or eye look shapes so blinking and gaze stay independent. Built-in emotions enable this; legacy presets keep their previous behaviour.")]
+        public bool preserveIndependentChannels;
+
         [Header("Thumbnail")]
         public Texture2D thumbnail;
+
+        [NonSerialized] public bool isBuiltIn;
 
         public void ApplyToSkinnedMeshRenderer(SkinnedMeshRenderer renderer)
         {
@@ -71,7 +77,7 @@ namespace Nyxara.AICompanion.Expressions
 
             foreach (var blendshapeName in allBlendshapes)
             {
-                var index = renderer.sharedMesh.GetBlendShapeIndex(blendshapeName);
+                var index = ArkItBlendshapeDriver.FindBlendshapeIndex(renderer.sharedMesh, blendshapeName);
                 if (index >= 0)
                 {
                     renderer.SetBlendShapeWeight(index, 0f);
@@ -113,10 +119,61 @@ namespace Nyxara.AICompanion.Expressions
 
     public enum ExpressionCategory
     {
-        Emotion,
-        Signal,
-        Mood,
-        Phoneme,
-        Custom
+        // Values 0-4 are the original serialized categories and must not be renumbered.
+        Emotion = 0,       // Core emotions
+        Signal = 1,
+        Mood = 2,
+        Phoneme = 3,
+        Custom = 4,
+
+        // Nyxara Expression Library categories.
+        Personality = 5,
+        EyeAction = 6,
+        MouthAction = 7,
+        Speech = 8
+    }
+
+    public static class ExpressionCategoryUtility
+    {
+        public static string GetDisplayName(ExpressionCategory category)
+        {
+            return category switch
+            {
+                ExpressionCategory.Emotion => "Core Emotions",
+                ExpressionCategory.Personality => "Personality",
+                ExpressionCategory.EyeAction => "Eye Actions",
+                ExpressionCategory.MouthAction => "Mouth & Jaw",
+                ExpressionCategory.Speech => "Speech & Visemes",
+                ExpressionCategory.Signal => "Signals (Legacy)",
+                ExpressionCategory.Mood => "Moods (Legacy)",
+                ExpressionCategory.Phoneme => "Phonemes (Legacy)",
+                _ => "Custom"
+            };
+        }
+
+        public static int GetSortOrder(ExpressionCategory category)
+        {
+            return category switch
+            {
+                ExpressionCategory.Emotion => 0,
+                ExpressionCategory.Personality => 1,
+                ExpressionCategory.EyeAction => 2,
+                ExpressionCategory.MouthAction => 3,
+                ExpressionCategory.Speech => 4,
+                ExpressionCategory.Signal => 5,
+                ExpressionCategory.Mood => 6,
+                ExpressionCategory.Phoneme => 7,
+                _ => 8
+            };
+        }
+
+        public static readonly ExpressionCategory[] LibraryOrder =
+        {
+            ExpressionCategory.Emotion,
+            ExpressionCategory.Personality,
+            ExpressionCategory.EyeAction,
+            ExpressionCategory.MouthAction,
+            ExpressionCategory.Speech
+        };
     }
 }

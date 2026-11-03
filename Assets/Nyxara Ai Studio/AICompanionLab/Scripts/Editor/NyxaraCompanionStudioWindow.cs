@@ -226,6 +226,7 @@ namespace Nyxara.AICompanion.Editor
         private void OnDisable()
         {
             PersistLipMixerSettings();
+            StopExpressionLibraryTest(false);
             ResetAutoBlinkPreview(ResolveStudioRootFromContext() != null ? ResolveStudioRootFromContext().GetComponent<ArkItBlendshapeDriver>() : null);
             Application.logMessageReceived -= OnLogMessageReceived;
             EditorApplication.update -= OnEditorUpdate;
@@ -1721,6 +1722,8 @@ namespace Nyxara.AICompanion.Editor
 
             EditorGUILayout.EndVertical();
 
+            EditorGUILayout.Space(8f);
+            DrawExpressionLibraryPanel(studioRoot, expressionLibrary, faceDriver);
             EditorGUILayout.Space(8f);
             DrawFaceProfilePanel(studioRoot, expressionLibrary, faceDriver);
             EditorGUILayout.Space(8f);
