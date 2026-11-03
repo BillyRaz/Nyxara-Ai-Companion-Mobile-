@@ -3900,6 +3900,8 @@ namespace Nyxara.AICompanion.Editor
             }
 
             expressionLibrary.SetExpressionLibraryPath(resolvedPath);
+            NyxaraExpressionLibraryBuilder.SyncPresetLibraryList(expressionLibrary);
+            expressionLibrary.LoadAllPresets();
             EditorUtility.SetDirty(expressionLibrary);
             AssetDatabase.SaveAssets();
             if (expressionLibrary.LoadedPresets.Count > 0)

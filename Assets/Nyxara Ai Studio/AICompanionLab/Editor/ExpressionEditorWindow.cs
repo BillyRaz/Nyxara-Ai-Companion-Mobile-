@@ -485,6 +485,10 @@ namespace Nyxara.AICompanion.Editor
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
                 _libraryManager?.LoadAllPresets();
+                if (_libraryManager != null)
+                {
+                    NyxaraExpressionLibraryBuilder.SyncPresetLibraryList(_libraryManager);
+                }
             }
         }
 
@@ -568,6 +572,10 @@ namespace Nyxara.AICompanion.Editor
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             _libraryManager?.LoadAllPresets();
+            if (_libraryManager != null)
+            {
+                NyxaraExpressionLibraryBuilder.SyncPresetLibraryList(_libraryManager);
+            }
             EditorGUIUtility.PingObject(target);
         }
 

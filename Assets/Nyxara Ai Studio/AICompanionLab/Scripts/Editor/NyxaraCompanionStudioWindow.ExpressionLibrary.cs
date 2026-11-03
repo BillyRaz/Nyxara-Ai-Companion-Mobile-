@@ -111,10 +111,10 @@ namespace Nyxara.AICompanion.Editor
             EditorGUILayout.EndHorizontal();
 
             DrawExpressionLibraryState(studioRoot, expressionLibrary);
-            DrawExpressionLibraryFilters(expressionLibrary, studioRoot);
+            DrawExpressionLibraryFilters(expressionLibrary);
 
             EditorGUILayout.Space(6f);
-            DrawExpressionLibraryPresetList(studioRoot, expressionLibrary);
+            DrawExpressionLibraryPresetList(expressionLibrary);
             DrawExpressionLibrarySelectedDetails(studioRoot, expressionLibrary);
             DrawExpressionLibraryTestControls(expressionLibrary);
             DrawExpressionLibrarySaveControls(expressionLibrary);
@@ -204,7 +204,7 @@ namespace Nyxara.AICompanion.Editor
             EditorGUILayout.EndHorizontal();
         }
 
-        private void DrawExpressionLibraryFilters(ExpressionLibraryManager expressionLibrary, GameObject studioRoot)
+        private void DrawExpressionLibraryFilters(ExpressionLibraryManager expressionLibrary)
         {
             EditorGUILayout.Space(6f);
             EditorGUILayout.BeginHorizontal();
@@ -239,11 +239,24 @@ namespace Nyxara.AICompanion.Editor
                     StartExpressionLibraryTest(expressionLibrary, presets);
                 }
             }
+
+            if (!expressionLibrary.ExpressionModeActive &&
+                (_expressionLibraryCategory == ExpressionCategory.MouthAction ||
+                 _expressionLibraryCategory == ExpressionCategory.Speech))
+            {
+                EditorGUILayout.HelpBox(
+                    "Expression Mode is OFF, so lip sync owns the mouth. These presets will not visibly drive mouth/jaw shapes until you enable Expression Mode in the panel above.",
+                    MessageType.Info);
+            }
+            else if (_expressionLibraryCategory == ExpressionCategory.EyeAction)
+            {
+                EditorGUILayout.HelpBox(
+                    "Eye actions are designed as overlays. Use the Overlay button to combine them with an emotion while blinking and gaze remain independent.",
+                    MessageType.None);
+            }
         }
 
-        private void DrawExpressionLibraryPresetList(
-            GameObject studioRoot,
-            ExpressionLibraryManager expressionLibrary)
+        private void DrawExpressionLibraryPresetList(ExpressionLibraryManager expressionLibrary)
         {
             var presets = FilterLibraryPresets(expressionLibrary).ToList();
             if (presets.Count == 0)
@@ -280,11 +293,6 @@ namespace Nyxara.AICompanion.Editor
                         GUILayout.Height(22f)))
                 {
                     _selectedExpressionPreset = preset;
-                    if (presetAudit?.requiresMouthChannels == true && !expressionLibrary.ExpressionModeActive)
-                    {
-                        EnsureExpressionModeForEditing(studioRoot);
-                    }
-
                     expressionLibrary.ApplyPreset(preset);
                 }
 
@@ -357,7 +365,7 @@ namespace Nyxara.AICompanion.Editor
             if (presetAudit?.requiresMouthChannels == true && !expressionLibrary.ExpressionModeActive)
             {
                 EditorGUILayout.HelpBox(
-                    "This preset uses mouth/jaw shapes. Only its upper-face shapes are previewed while lip sync owns the mouth.",
+                    "This preset uses mouth/jaw shapes. None of those shapes are driven while lip sync owns the mouth; enable Expression Mode to preview the full preset.",
                     MessageType.Info);
                 if (GUILayout.Button("Enable Expression Mode And Apply"))
                 {
@@ -467,6 +475,7 @@ namespace Nyxara.AICompanion.Editor
                     {
                         _selectedExpressionPreset = preset;
                         _expressionLibraryAuditDirty = true;
+                        NyxaraExpressionLibraryBuilder.SyncPresetLibraryList(expressionLibrary);
                         EditorGUIUtility.PingObject(preset);
                         Repaint();
                     }

@@ -719,12 +719,15 @@ namespace Nyxara.AICompanion.Expressions
 
         private void EnsureBuiltInPresets()
         {
-            if (_builtInPresets.Count > 0)
+            _builtInPresets.RemoveAll(preset => preset == null);
+            var catalogPresets = NyxaraExpressionCatalog.GetPresets();
+            if (_builtInPresets.Count == catalogPresets.Count)
             {
                 return;
             }
 
-            foreach (var preset in NyxaraExpressionCatalog.GetPresets())
+            _builtInPresets.Clear();
+            foreach (var preset in catalogPresets)
             {
                 if (preset != null)
                 {

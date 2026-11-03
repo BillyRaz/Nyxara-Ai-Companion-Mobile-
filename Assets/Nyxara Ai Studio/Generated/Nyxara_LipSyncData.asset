@@ -14,115 +14,123 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Nyxara.AICompanion.LipSync.LipSyncData
   visemeMappings:
   - viseme: 1
-    blendshapeName: jawOpen
+    blendshapeName: MECHANICGIRL_HEAD.jawOpen
     intensity: 27.9
     jawOpenContribution: 1
   - viseme: 7
-    blendshapeName: jawOpen, mouthLowerDownLeft, mouthLowerDownRight
+    blendshapeName: MECHANICGIRL_HEAD.jawOpen, MECHANICGIRL_HEAD.mouthLowerDownLeft,
+      MECHANICGIRL_HEAD.mouthLowerDownRight
     intensity: 24
     jawOpenContribution: 0.85
   - viseme: 2
-    blendshapeName: mouthSmileLeft, mouthSmileRight, mouthStretchLeft, mouthStretchRight
+    blendshapeName: MECHANICGIRL_HEAD.mouthSmileLeft, MECHANICGIRL_HEAD.mouthSmileRight,
+      MECHANICGIRL_HEAD.mouthStretchLeft, MECHANICGIRL_HEAD.mouthStretchRight
     intensity: 40
     jawOpenContribution: 0.15
   - viseme: 6
-    blendshapeName: mouthStretchLeft, mouthStretchRight, mouthSmileLeft, mouthSmileRight
+    blendshapeName: MECHANICGIRL_HEAD.mouthStretchLeft, MECHANICGIRL_HEAD.mouthStretchRight,
+      MECHANICGIRL_HEAD.mouthSmileLeft, MECHANICGIRL_HEAD.mouthSmileRight
     intensity: 28
     jawOpenContribution: 0.12
   - viseme: 3
-    blendshapeName: mouthPucker
+    blendshapeName: MECHANICGIRL_HEAD.mouthPucker
     intensity: 80
     jawOpenContribution: 0.2
   - viseme: 4
-    blendshapeName: mouthFunnel, mouthPucker
+    blendshapeName: MECHANICGIRL_HEAD.mouthFunnel, MECHANICGIRL_HEAD.mouthPucker
     intensity: 59.4
     jawOpenContribution: 0.3
   - viseme: 11
-    blendshapeName: mouthFunnel, mouthPucker
+    blendshapeName: MECHANICGIRL_HEAD.mouthFunnel, MECHANICGIRL_HEAD.mouthPucker
     intensity: 52
     jawOpenContribution: 0.25
   - viseme: 8
-    blendshapeName: mouthFunnel, mouthPucker, jawOpen
+    blendshapeName: MECHANICGIRL_HEAD.mouthFunnel, MECHANICGIRL_HEAD.mouthPucker,
+      MECHANICGIRL_HEAD.jawOpen
     intensity: 50
     jawOpenContribution: 0.45
   - viseme: 12
-    blendshapeName: mouthFunnel, mouthSmileLeft, mouthSmileRight
+    blendshapeName: MECHANICGIRL_HEAD.mouthFunnel, MECHANICGIRL_HEAD.mouthSmileLeft,
+      MECHANICGIRL_HEAD.mouthSmileRight
     intensity: 42
     jawOpenContribution: 0.2
   - viseme: 25
-    blendshapeName: mouthPucker
+    blendshapeName: MECHANICGIRL_HEAD.mouthPucker
     intensity: 62
     jawOpenContribution: 0.08
   - viseme: 5
-    blendshapeName: mouthStretchLeft, mouthStretchRight, mouthDimpleLeft, mouthDimpleRight
+    blendshapeName: MECHANICGIRL_HEAD.mouthStretchLeft, MECHANICGIRL_HEAD.mouthStretchRight,
+      MECHANICGIRL_HEAD.mouthDimpleLeft, MECHANICGIRL_HEAD.mouthDimpleRight
     intensity: 35
     jawOpenContribution: 0.15
   - viseme: 10
-    blendshapeName: mouthFunnel, mouthStretchLeft, mouthStretchRight
+    blendshapeName: MECHANICGIRL_HEAD.mouthFunnel, MECHANICGIRL_HEAD.mouthStretchLeft,
+      MECHANICGIRL_HEAD.mouthStretchRight
     intensity: 30
     jawOpenContribution: 0.12
   - viseme: 15
-    blendshapeName: mouthPressLeft, mouthPressRight
+    blendshapeName: MECHANICGIRL_HEAD.mouthPressLeft, MECHANICGIRL_HEAD.mouthPressRight
     intensity: 30
     jawOpenContribution: 0.05
   - viseme: 13
-    blendshapeName: tongueOut, jawOpen
+    blendshapeName: MECHANICGIRL_HEAD.tongueOut, MECHANICGIRL_HEAD.jawOpen
     intensity: 24
     jawOpenContribution: 0.35
   - viseme: 14
-    blendshapeName: tongueOut, jawOpen
+    blendshapeName: MECHANICGIRL_HEAD.tongueOut, MECHANICGIRL_HEAD.jawOpen
     intensity: 18
     jawOpenContribution: 0.25
   - viseme: 16
-    blendshapeName: mouthStretchLeft, mouthStretchRight
+    blendshapeName: MECHANICGIRL_HEAD.mouthStretchLeft, MECHANICGIRL_HEAD.mouthStretchRight
     intensity: 20
     jawOpenContribution: 0.06
   - viseme: 17
-    blendshapeName: mouthPucker, mouthFunnel
+    blendshapeName: MECHANICGIRL_HEAD.mouthPucker, MECHANICGIRL_HEAD.mouthFunnel
     intensity: 26
     jawOpenContribution: 0.08
   - viseme: 18
-    blendshapeName: jawOpen
+    blendshapeName: MECHANICGIRL_HEAD.jawOpen
     intensity: 12
     jawOpenContribution: 0.3
   - viseme: 19
-    blendshapeName: mouthClose
+    blendshapeName: MECHANICGIRL_HEAD.mouthClose
     intensity: 36.7
     jawOpenContribution: 0
   - viseme: 26
-    blendshapeName: mouthClose
+    blendshapeName: MECHANICGIRL_HEAD.mouthClose
     intensity: 42
     jawOpenContribution: 0
   - viseme: 20
-    blendshapeName: mouthClose, jawOpen
+    blendshapeName: MECHANICGIRL_HEAD.mouthClose, MECHANICGIRL_HEAD.jawOpen
     intensity: 18
     jawOpenContribution: 0.1
   - viseme: 21
-    blendshapeName: mouthClose, jawOpen
+    blendshapeName: MECHANICGIRL_HEAD.mouthClose, MECHANICGIRL_HEAD.jawOpen
     intensity: 16
     jawOpenContribution: 0.14
   - viseme: 22
-    blendshapeName: tongueOut, jawOpen
+    blendshapeName: MECHANICGIRL_HEAD.tongueOut, MECHANICGIRL_HEAD.jawOpen
     intensity: 16
     jawOpenContribution: 0.18
   - viseme: 23
-    blendshapeName: mouthPucker, jawOpen
+    blendshapeName: MECHANICGIRL_HEAD.mouthPucker, MECHANICGIRL_HEAD.jawOpen
     intensity: 20
     jawOpenContribution: 0.14
   - viseme: 24
-    blendshapeName: mouthSmileLeft, mouthSmileRight, mouthStretchLeft, mouthStretchRight
+    blendshapeName: MECHANICGIRL_HEAD.mouthSmileLeft, MECHANICGIRL_HEAD.mouthSmileRight,
+      MECHANICGIRL_HEAD.mouthStretchLeft, MECHANICGIRL_HEAD.mouthStretchRight
     intensity: 24
     jawOpenContribution: 0.08
   - viseme: 27
-    blendshapeName: jawOpen, mouthClose
+    blendshapeName: MECHANICGIRL_HEAD.jawOpen, MECHANICGIRL_HEAD.mouthClose
     intensity: 12
     jawOpenContribution: 0.08
   - viseme: 28
-    blendshapeName: jawOpen
+    blendshapeName: MECHANICGIRL_HEAD.jawOpen
     intensity: 16
     jawOpenContribution: 0.18
   - viseme: 0
-    blendshapeName: mouthClose
+    blendshapeName: MECHANICGIRL_HEAD.mouthClose
     intensity: 0
     jawOpenContribution: 0
   smoothTime: 0.08
