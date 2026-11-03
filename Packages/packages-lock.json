@@ -8,6 +8,16 @@
         "com.unity.nuget.newtonsoft-json": "3.0.2"
       }
     },
+    "com.skykim.piper-unity": {
+      "version": "file:com.skykim.piper-unity",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.ai.inference": "2.2.1",
+        "com.unity.nuget.newtonsoft-json": "3.2.1",
+        "com.unity.ugui": "2.0.0"
+      }
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 1,
@@ -174,6 +184,16 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.postprocessing": {
+      "version": "3.5.4",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.imgui": "1.0.0",
+        "com.unity.modules.physics": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.render-pipelines.core": {
       "version": "17.3.0",
       "depth": 1,
@@ -208,14 +228,14 @@
     },
     "com.unity.searcher": {
       "version": "4.9.5",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.shadergraph": {
       "version": "17.3.0",
-      "depth": 1,
+      "depth": 0,
       "source": "builtin",
       "dependencies": {
         "com.unity.render-pipelines.core": "17.3.0",
@@ -278,16 +298,6 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
-    },
-    "com.skykim.piper-unity": {
-      "version": "file:com.skykim.piper-unity",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.ai.inference": "2.2.1",
-        "com.unity.nuget.newtonsoft-json": "3.2.1",
-        "com.unity.ugui": "2.0.0"
-      }
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

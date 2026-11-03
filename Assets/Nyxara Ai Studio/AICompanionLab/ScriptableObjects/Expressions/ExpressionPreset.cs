@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Nyxara.AICompanion.Face;
 using UnityEngine;
 
 namespace Nyxara.AICompanion.Expressions
@@ -40,7 +41,7 @@ namespace Nyxara.AICompanion.Expressions
 
             foreach (var weight in blendshapeWeights)
             {
-                var index = renderer.sharedMesh.GetBlendShapeIndex(weight.blendshapeName);
+                var index = ArkItBlendshapeDriver.FindBlendshapeIndex(renderer.sharedMesh, weight.blendshapeName);
                 if (index >= 0)
                 {
                     renderer.SetBlendShapeWeight(index, weight.weight);

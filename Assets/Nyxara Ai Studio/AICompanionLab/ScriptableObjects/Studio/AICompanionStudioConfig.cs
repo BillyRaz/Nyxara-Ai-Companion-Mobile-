@@ -2,6 +2,7 @@
 // Publisher: RAZ Studio
 // Product: Nyxara AI Studio
 
+using System.Collections.Generic;
 using Nyxara.AICompanion.Configuration;
 using Nyxara.AICompanion.Data;
 using UnityEngine;
@@ -22,6 +23,8 @@ namespace Nyxara.AICompanion.Studio
         public GameObject sourceCharacterPrefab;
         public bool sourceIsExistingRootPrefab = false;
         public string preferredFaceRendererPath = string.Empty;
+        public List<string> additionalFaceRendererPaths = new();
+        [HideInInspector] public bool additionalFaceRenderersInitialized = false;
         public Transform playerTransform;
 
         [Header("Data")]

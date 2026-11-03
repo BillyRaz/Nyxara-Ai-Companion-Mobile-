@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Nyxara.AICompanion.Face;
 using UnityEngine;
 
 namespace Nyxara.AICompanion.Expressions
@@ -370,9 +371,38 @@ namespace Nyxara.AICompanion.Expressions
                 }
             }
 
+            // Imported meshes prefix each shape with the mesh name
+            // ("MECHANICGIRL_HEAD.jawOpen"). Match the portable suffix before
+            // falling back to loose substring matching.
+            foreach (var candidate in candidates)
+            {
+                var canonicalCandidate = ArkItBlendshapeDriver.GetCanonicalBlendshapeName(candidate);
+                if (string.IsNullOrWhiteSpace(canonicalCandidate))
+                {
+                    continue;
+                }
+
+                var canonical = blendshapeNames.FirstOrDefault(name =>
+                    string.Equals(
+                        ArkItBlendshapeDriver.GetCanonicalBlendshapeName(name),
+                        canonicalCandidate,
+                        StringComparison.OrdinalIgnoreCase));
+                if (!string.IsNullOrWhiteSpace(canonical))
+                {
+                    return canonical;
+                }
+            }
+
             foreach (var candidate in candidates)
             {
                 var normalizedCandidate = Normalize(candidate);
+                // Single-letter aliases such as "A", "U" and "O" must match exactly;
+                // as substrings they match unrelated shapes (for example "U" in "eyeLookOutLeft").
+                if (normalizedCandidate.Length < 3)
+                {
+                    continue;
+                }
+
                 var contains = blendshapeNames.FirstOrDefault(name =>
                     Normalize(name).IndexOf(normalizedCandidate, StringComparison.OrdinalIgnoreCase) >= 0);
                 if (!string.IsNullOrWhiteSpace(contains))

@@ -63,3 +63,14 @@ External/Repos/
 # Python caches
 __pycache__/
 *.pyc
+
+# Local GGUF models
+Assets/StreamingAssets/Models/Qwen3.5-2B-Q4_K_M.gguf
+
+Assets/StreamingAssets/Models/Qwen3.5-2B-Q4_K_M.gguf.meta
+
+# Local IdaFaber source assets
+Assets/IdaFaber/
+
+Assets/IdaFaber/
+Assets/IdaFaber.meta

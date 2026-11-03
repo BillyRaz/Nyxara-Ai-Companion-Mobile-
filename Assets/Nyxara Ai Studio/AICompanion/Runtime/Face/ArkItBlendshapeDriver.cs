@@ -2,6 +2,7 @@
 // Publisher: RAZ Studio
 // Product: Nyxara AI Studio
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,7 +100,7 @@ namespace Nyxara.AICompanion.Face
 
                 foreach (var candidate in GetBlendshapeCandidates(blendshapeName))
                 {
-                    var index = renderer.sharedMesh.GetBlendShapeIndex(candidate);
+                    var index = FindBlendshapeIndex(renderer.sharedMesh, candidate);
                     if (index >= 0)
                     {
                         renderer.SetBlendShapeWeight(index, weight);
@@ -125,7 +126,7 @@ namespace Nyxara.AICompanion.Face
 
                 foreach (var candidate in GetBlendshapeCandidates(blendshapeName))
                 {
-                    var index = renderer.sharedMesh.GetBlendShapeIndex(candidate);
+                    var index = FindBlendshapeIndex(renderer.sharedMesh, candidate);
                     if (index < 0)
                     {
                         continue;
@@ -156,7 +157,7 @@ namespace Nyxara.AICompanion.Face
 
                 foreach (var candidate in GetBlendshapeCandidates(blendshapeName))
                 {
-                    var index = renderer.sharedMesh.GetBlendShapeIndex(candidate);
+                    var index = FindBlendshapeIndex(renderer.sharedMesh, candidate);
                     if (index >= 0)
                     {
                         weight = Mathf.Max(weight, renderer.GetBlendShapeWeight(index));
@@ -177,7 +178,7 @@ namespace Nyxara.AICompanion.Face
             return GetAllRenderers()
                 .Any(renderer => renderer != null &&
                                  renderer.sharedMesh != null &&
-                                 GetBlendshapeCandidates(blendshapeName).Any(candidate => renderer.sharedMesh.GetBlendShapeIndex(candidate) >= 0));
+                                 GetBlendshapeCandidates(blendshapeName).Any(candidate => FindBlendshapeIndex(renderer.sharedMesh, candidate) >= 0));
         }
 
         public List<string> GetBlendshapeNames()
@@ -252,12 +253,95 @@ namespace Nyxara.AICompanion.Face
                 return System.Array.Empty<string>();
             }
 
-            if (BlendshapeAliases.TryGetValue(blendshapeName, out var aliases) && aliases != null && aliases.Length > 0)
+            var canonicalName = GetCanonicalBlendshapeName(blendshapeName);
+            if (BlendshapeAliases.TryGetValue(canonicalName, out var aliases) && aliases != null && aliases.Length > 0)
             {
-                return aliases;
+                if (string.Equals(canonicalName, blendshapeName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return aliases;
+                }
+
+                var expanded = new string[aliases.Length + 1];
+                expanded[0] = blendshapeName;
+                Array.Copy(aliases, 0, expanded, 1, aliases.Length);
+                return expanded;
             }
 
             return new[] { blendshapeName };
+        }
+
+        /// <summary>
+        /// Imported FBX meshes usually prefix each blendshape with the mesh name
+        /// (for example "MECHANICGIRL_HEAD.jawOpen"). Return the portable shape name
+        /// so the same expression can be matched against every face mesh.
+        /// </summary>
+        public static string GetCanonicalBlendshapeName(string blendshapeName)
+        {
+            if (string.IsNullOrWhiteSpace(blendshapeName))
+            {
+                return string.Empty;
+            }
+
+            var value = blendshapeName.Trim();
+            var separator = value.LastIndexOf('.');
+            return separator >= 0 && separator < value.Length - 1
+                ? value.Substring(separator + 1)
+                : value;
+        }
+
+        /// <summary>
+        /// Resolves a blendshape by exact name first, then by canonical name. This lets a
+        /// head-authored expression name such as "MECHANICGIRL_HEAD.jawOpen" or the bare
+        /// "jawOpen" drive "pasted__CCG_TEETH1.jawOpen" on the teeth mesh.
+        /// </summary>
+        public static int FindBlendshapeIndex(Mesh mesh, string blendshapeName)
+        {
+            if (mesh == null || string.IsNullOrWhiteSpace(blendshapeName))
+            {
+                return -1;
+            }
+
+            var index = mesh.GetBlendShapeIndex(blendshapeName);
+            if (index >= 0)
+            {
+                return index;
+            }
+
+            var canonicalName = GetCanonicalBlendshapeName(blendshapeName);
+            if (!string.Equals(canonicalName, blendshapeName, StringComparison.Ordinal))
+            {
+                index = mesh.GetBlendShapeIndex(canonicalName);
+                if (index >= 0)
+                {
+                    return index;
+                }
+            }
+
+            var canonicalSpan = canonicalName.AsSpan();
+            for (var i = 0; i < mesh.blendShapeCount; i++)
+            {
+                var meshBlendshapeName = mesh.GetBlendShapeName(i);
+                if (string.IsNullOrEmpty(meshBlendshapeName))
+                {
+                    continue;
+                }
+
+                if (string.Equals(meshBlendshapeName, canonicalName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return i;
+                }
+
+                var separator = meshBlendshapeName.LastIndexOf('.');
+                var meshCanonicalSpan = separator >= 0
+                    ? meshBlendshapeName.AsSpan(separator + 1)
+                    : meshBlendshapeName.AsSpan();
+                if (meshCanonicalSpan.Equals(canonicalSpan, StringComparison.OrdinalIgnoreCase))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
         private static IEnumerable<string> GetBlendshapeCandidates(string blendshapeName)

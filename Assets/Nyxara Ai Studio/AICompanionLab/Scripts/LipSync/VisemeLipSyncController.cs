@@ -68,7 +68,7 @@ namespace Nyxara.AICompanion.LipSync
 
                 foreach (var blendshapeName in mapping.EnumerateBlendshapeNames())
                 {
-                    _trackedBlendshapeNames.Add(blendshapeName);
+                    _trackedBlendshapeNames.Add(ArkItBlendshapeDriver.GetCanonicalBlendshapeName(blendshapeName));
                 }
             }
 
@@ -206,7 +206,11 @@ namespace Nyxara.AICompanion.LipSync
             var shapedWeight = ShapeTargetWeight(rawWeight);
             foreach (var blendshapeName in mapping.EnumerateBlendshapeNames())
             {
-                targets[blendshapeName] = shapedWeight;
+                var canonicalName = ArkItBlendshapeDriver.GetCanonicalBlendshapeName(blendshapeName);
+                if (!string.IsNullOrWhiteSpace(canonicalName))
+                {
+                    targets[canonicalName] = shapedWeight;
+                }
             }
         }
 
@@ -388,7 +392,7 @@ namespace Nyxara.AICompanion.LipSync
 
                 foreach (var candidate in ArkItBlendshapeDriver.ResolveBlendshapeCandidates(blendshapeName))
                 {
-                    var index = renderer.sharedMesh.GetBlendShapeIndex(candidate);
+                    var index = ArkItBlendshapeDriver.FindBlendshapeIndex(renderer.sharedMesh, candidate);
                     if (index >= 0)
                     {
                         return renderer.GetBlendShapeWeight(index);
@@ -415,7 +419,7 @@ namespace Nyxara.AICompanion.LipSync
 
                 foreach (var candidate in ArkItBlendshapeDriver.ResolveBlendshapeCandidates(blendshapeName))
                 {
-                    var index = renderer.sharedMesh.GetBlendShapeIndex(candidate);
+                    var index = ArkItBlendshapeDriver.FindBlendshapeIndex(renderer.sharedMesh, candidate);
                     if (index >= 0)
                     {
                         renderer.SetBlendShapeWeight(index, weight);

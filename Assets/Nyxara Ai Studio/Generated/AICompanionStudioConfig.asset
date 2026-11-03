@@ -14,17 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Nyxara.AICompanion.Studio.AICompanionStudioConfig
   characterName: Nyxara
   studioRootName: NyxaraStudioRoot
-  sourceCharacterPrefab: {fileID: 919132149155446097, guid: 4fde7f8b033e0a44a95e3f2282bb68ea, type: 3}
+  sourceCharacterPrefab: {fileID: 919132149155446097, guid: 5492fd79ab686a740bf1d2ec4948e31c, type: 3}
   sourceIsExistingRootPrefab: 0
-  preferredFaceRendererPath: Nyxara Head.Shape
+  preferredFaceRendererPath: Head/SK_MECHANICGIRL_HEAD
+  additionalFaceRendererPaths:
+  - Head/SK_MECHANICGIRL_CARUNCLE
+  - Head/SK_MECHANICGIRL_CORNEA
+  - Head/SK_MECHANICGIRL_EYES
+  - Head/SK_MECHANICGIRL_LASHES
+  - Head/SK_MECHANICGIRL_TEETH
+  additionalFaceRenderersInitialized: 1
   playerTransform: {fileID: 0}
   characterProfile: {fileID: 11400000, guid: 2f70b1021184d3249834dacef0b63b7b, type: 2}
-  llmModelPath: Models/Qwen3.5-0.8B-Q4_K_M.gguf
+  llmModelPath: Models/Qwen3.5-2B-Q4_K_M.gguf
   whisperModelRelativePath: Speech/ggml-tiny.bin
   ttsEnabled: 1
   hasMigratedLegacyTtsConfiguration: 1
   piperExecutablePath: Speech/PiperRuntime/piper/piper.exe
-  piperVoicePath: Speech/Piper/clean100.onnx
+  piperVoicePath: Assets/Speech/Piper/clean100.onnx
   createSceneInstance: 1
   saveRootPrefab: 1
   createProfileIfMissing: 1
@@ -49,10 +56,10 @@ MonoBehaviour:
   characterLocalPosition: {x: 0, y: 0, z: 0}
   characterLocalEuler: {x: 0, y: 0, z: 0}
   focusHeightOffset: 1.55
-  cameraPivotOffset: {x: 0, y: -0.16, z: 0}
-  cameraDistance: 1.35
-  cameraHeight: 1.6
-  cameraYaw: 0
+  cameraPivotOffset: {x: 0, y: -0.2, z: 0}
+  cameraDistance: 1.563
+  cameraHeight: 1.441
+  cameraYaw: -2
   cameraFieldOfView: 26
   keyLightIntensity: 2.2
   fillLightIntensity: 0.9

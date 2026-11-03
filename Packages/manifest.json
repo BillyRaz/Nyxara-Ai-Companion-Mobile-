@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "ai.undream.llm": "file:ai.undream.llm",
+    "com.skykim.piper-unity": "file:com.skykim.piper-unity",
     "com.unity.ai.assistant": "2.21.0-pre.2",
     "com.unity.ai.inference": "2.6.1",
     "com.unity.ai.navigation": "2.0.16",
@@ -9,13 +10,15 @@
     "com.unity.ide.visualstudio": "2.0.26",
     "com.unity.inputsystem": "1.20.1",
     "com.unity.multiplayer.center": "1.0.1",
+    "com.unity.pipeline": "0.9.1-exp.1",
+    "com.unity.postprocessing": "3.5.4",
     "com.unity.render-pipelines.universal": "17.3.0",
+    "com.unity.shadergraph": "17.3.0",
     "com.unity.test-framework": "1.6.0",
     "com.unity.timeline": "1.8.13",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualscripting": "1.9.12",
     "com.whisper.unity": "file:com.whisper.unity",
-    "com.skykim.piper-unity": "file:com.skykim.piper-unity",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.adaptiveperformance": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
@@ -49,7 +52,6 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "com.unity.pipeline": "0.9.1-exp.1"
+    "com.unity.modules.xr": "1.0.0"
   }
 }

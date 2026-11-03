@@ -354,7 +354,7 @@ namespace Nyxara.AICompanion.Expressions
             var appliedIndices = new HashSet<int>();
             foreach (var candidate in ArkItBlendshapeDriver.ResolveBlendshapeCandidates(blendshapeName))
             {
-                var index = renderer.sharedMesh.GetBlendShapeIndex(candidate);
+                var index = ArkItBlendshapeDriver.FindBlendshapeIndex(renderer.sharedMesh, candidate);
                 if (index < 0 || !appliedIndices.Add(index))
                 {
                     continue;

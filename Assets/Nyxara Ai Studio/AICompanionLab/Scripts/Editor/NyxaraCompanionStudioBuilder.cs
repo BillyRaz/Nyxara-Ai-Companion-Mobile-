@@ -467,10 +467,53 @@ namespace Nyxara.AICompanion.Editor
             EditorUtility.SetDirty(config);
         }
 
-        private static List<SkinnedMeshRenderer> CollectAdditionalFaceRenderers(GameObject characterInstance, SkinnedMeshRenderer primaryRenderer)
+        public static List<SkinnedMeshRenderer> DetectAdditionalFaceRenderers(AICompanionStudioConfig config, GameObject characterInstance)
+        {
+            if (characterInstance == null)
+            {
+                return new List<SkinnedMeshRenderer>();
+            }
+
+            var primaryRenderer = config != null ? ResolveFaceRenderer(config, characterInstance) : null;
+            return CollectAdditionalFaceRenderers(characterInstance, primaryRenderer);
+        }
+
+        private static List<SkinnedMeshRenderer> CollectAdditionalFaceRenderers(
+            GameObject characterInstance,
+            SkinnedMeshRenderer primaryRenderer,
+            IEnumerable<string> manualPaths = null,
+            bool includeAutoDetected = true)
         {
             var results = new List<SkinnedMeshRenderer>();
             if (characterInstance == null)
+            {
+                return results;
+            }
+
+            var seen = new HashSet<SkinnedMeshRenderer>();
+            if (primaryRenderer != null)
+            {
+                seen.Add(primaryRenderer);
+            }
+
+            if (manualPaths != null)
+            {
+                foreach (var path in manualPaths)
+                {
+                    if (string.IsNullOrWhiteSpace(path))
+                    {
+                        continue;
+                    }
+
+                    var manualRenderer = characterInstance.transform.Find(path)?.GetComponent<SkinnedMeshRenderer>();
+                    if (manualRenderer != null && seen.Add(manualRenderer))
+                    {
+                        results.Add(manualRenderer);
+                    }
+                }
+            }
+
+            if (!includeAutoDetected)
             {
                 return results;
             }
@@ -487,7 +530,7 @@ namespace Nyxara.AICompanion.Editor
 
             foreach (var renderer in renderers)
             {
-                if (renderer == null || renderer == primaryRenderer || renderer.sharedMesh == null)
+                if (renderer == null || renderer.sharedMesh == null || !seen.Add(renderer))
                 {
                     continue;
                 }
@@ -511,11 +554,15 @@ namespace Nyxara.AICompanion.Editor
                 transformName.Contains("brow") ||
                 transformName.Contains("mouth") ||
                 transformName.Contains("teeth") ||
+                transformName.Contains("cornea") ||
+                transformName.Contains("caruncle") ||
                 meshName.Contains("lash") ||
                 meshName.Contains("eye") ||
                 meshName.Contains("brow") ||
                 meshName.Contains("mouth") ||
-                meshName.Contains("teeth");
+                meshName.Contains("teeth") ||
+                meshName.Contains("cornea") ||
+                meshName.Contains("caruncle");
 
             var hasBlendshapeOverlap = false;
             if (renderer.sharedMesh != null)
@@ -561,7 +608,11 @@ namespace Nyxara.AICompanion.Editor
             }
 
             var faceRenderer = ResolveFaceRenderer(config, characterInstance);
-            var additionalFaceRenderers = CollectAdditionalFaceRenderers(characterInstance, faceRenderer);
+            var additionalFaceRenderers = CollectAdditionalFaceRenderers(
+                characterInstance,
+                faceRenderer,
+                config.additionalFaceRendererPaths,
+                !config.additionalFaceRenderersInitialized);
 
             var tts = root.GetComponentInChildren<PiperTtsService>(true);
             var audioSource = tts != null ? GetObjectReference<AudioSource>(tts, "audioSource") : root.GetComponentInChildren<AudioSource>(true);

@@ -125,6 +125,10 @@ namespace Nyxara.AICompanion.Editor
         private bool _showWarnings = true;
         private bool _showInfo = true;
         private double _lastRuntimeRepaint;
+        private bool _showAdditionalFaceRenderers = true;
+        private string _additionalFaceRendererError = string.Empty;
+        private GameObject _additionalFaceRendererScanSource;
+        private bool _additionalFaceRendererScanAttempted;
         private SkinnedMeshRenderer _expressionRenderer;
         private LipSyncData _lipSyncData;
         private ExpressionPreset _selectedExpressionPreset;
@@ -980,6 +984,306 @@ namespace Nyxara.AICompanion.Editor
             var newIndex = EditorGUILayout.Popup("Preferred Face Renderer", selectedIndex, labels);
             _config.preferredFaceRendererPath = renderers[newIndex].Path;
             EditorGUILayout.LabelField("Renderer Path", _config.preferredFaceRendererPath, EditorStyles.miniLabel);
+            DrawAdditionalFaceRenderers();
+        }
+
+        private void DrawAdditionalFaceRenderers()
+        {
+            if (_config.additionalFaceRendererPaths == null)
+            {
+                _config.additionalFaceRendererPaths = new List<string>();
+            }
+
+            EnsureAdditionalFaceRendererPathsInitialized();
+
+            EditorGUILayout.Space(4f);
+            _showAdditionalFaceRenderers = EditorGUILayout.Foldout(
+                _showAdditionalFaceRenderers,
+                "Additional Face Renderers",
+                true);
+            if (!_showAdditionalFaceRenderers)
+            {
+                return;
+            }
+
+            EditorGUI.indentLevel++;
+            try
+            {
+                _additionalFaceRendererError = string.Empty;
+                var paths = _config.additionalFaceRendererPaths;
+                for (var i = 0; i < paths.Count; i++)
+                {
+                    var path = paths[i];
+                    var currentRenderer = ResolveSourceFaceRenderer(path);
+                    EditorGUILayout.BeginHorizontal();
+                    var selectedRenderer = (SkinnedMeshRenderer)EditorGUILayout.ObjectField(
+                        $"Renderer {i + 1}",
+                        currentRenderer,
+                        typeof(SkinnedMeshRenderer),
+                        true);
+
+                    if (selectedRenderer != currentRenderer)
+                    {
+                        if (selectedRenderer == null)
+                        {
+                            paths[i] = string.Empty;
+                            path = string.Empty;
+                            _config.additionalFaceRenderersInitialized = true;
+                            SaveConfigAndSyncLiveServices();
+                        }
+                        else if (TryBuildAdditionalFaceRendererPath(selectedRenderer, out var resolvedPath, out var validationError))
+                        {
+                            paths[i] = resolvedPath;
+                            path = resolvedPath;
+                            _config.additionalFaceRenderersInitialized = true;
+                            SaveConfigAndSyncLiveServices();
+                        }
+                        else
+                        {
+                            _additionalFaceRendererError = validationError;
+                        }
+                    }
+
+                    if (GUILayout.Button(new GUIContent("−", "Remove this renderer."), GUILayout.Width(24f)))
+                    {
+                        paths.RemoveAt(i);
+                        i--;
+                        _additionalFaceRendererError = string.Empty;
+                        _config.additionalFaceRenderersInitialized = true;
+                        SaveConfigAndSyncLiveServices();
+                        EditorGUILayout.EndHorizontal();
+                        continue;
+                    }
+
+                    EditorGUILayout.EndHorizontal();
+
+                    if (currentRenderer == null && !string.IsNullOrWhiteSpace(path))
+                    {
+                        EditorGUILayout.HelpBox($"Renderer path '{path}' was not found under the current source character.", MessageType.Warning);
+                    }
+                }
+
+                EditorGUILayout.BeginHorizontal();
+                if (GUILayout.Button(new GUIContent("+", "Add an additional face renderer."), GUILayout.Width(24f)))
+                {
+                    paths.Add(string.Empty);
+                    _additionalFaceRendererError = string.Empty;
+                    _config.additionalFaceRenderersInitialized = true;
+                    SaveConfigAndSyncLiveServices();
+                }
+
+                if (GUILayout.Button(
+                        new GUIContent("Reset To Detected", "Replace the list with the builder's current automatic detection."),
+                        EditorStyles.miniButton))
+                {
+                    paths.Clear();
+                    paths.AddRange(BuildDetectedAdditionalFaceRendererPaths());
+                    _additionalFaceRendererError = string.Empty;
+                    _config.additionalFaceRenderersInitialized = true;
+                    SaveConfigAndSyncLiveServices();
+                }
+
+                GUILayout.FlexibleSpace();
+                EditorGUILayout.EndHorizontal();
+
+                if (!string.IsNullOrWhiteSpace(_additionalFaceRendererError))
+                {
+                    EditorGUILayout.HelpBox(_additionalFaceRendererError, MessageType.Warning);
+                }
+
+                EditorGUILayout.HelpBox("This list is preserved when the Studio root is built or updated. Use Reset To Detected to replace it with automatic detection.", MessageType.None);
+            }
+            finally
+            {
+                EditorGUI.indentLevel--;
+            }
+        }
+
+        private void EnsureAdditionalFaceRendererPathsInitialized()
+        {
+            if (_config == null ||
+                _config.sourceCharacterPrefab == null ||
+                _config.additionalFaceRenderersInitialized)
+            {
+                return;
+            }
+
+            if (_additionalFaceRendererScanAttempted && _additionalFaceRendererScanSource == _config.sourceCharacterPrefab)
+            {
+                return;
+            }
+
+            _additionalFaceRendererScanAttempted = true;
+            _additionalFaceRendererScanSource = _config.sourceCharacterPrefab;
+
+            if (_config.additionalFaceRendererPaths != null && _config.additionalFaceRendererPaths.Count > 0)
+            {
+                _config.additionalFaceRenderersInitialized = true;
+                EditorUtility.SetDirty(_config);
+                return;
+            }
+
+            var detectedPaths = BuildDetectedAdditionalFaceRendererPaths();
+            if (detectedPaths.Count == 0)
+            {
+                return;
+            }
+
+            _config.additionalFaceRendererPaths.Clear();
+            _config.additionalFaceRendererPaths.AddRange(detectedPaths);
+            _config.additionalFaceRenderersInitialized = true;
+            EditorUtility.SetDirty(_config);
+            AssetDatabase.SaveAssets();
+        }
+
+        private List<string> BuildDetectedAdditionalFaceRendererPaths()
+        {
+            var characterRoot = ResolveSourceCharacterRoot();
+            if (characterRoot == null)
+            {
+                return new List<string>();
+            }
+
+            return NyxaraCompanionStudioBuilder.DetectAdditionalFaceRenderers(_config, characterRoot.gameObject)
+                .Where(renderer => renderer != null)
+                .Select(renderer => GetRelativePath(renderer.transform, characterRoot))
+                .Where(path => !string.IsNullOrWhiteSpace(path))
+                .Distinct(StringComparer.Ordinal)
+                .ToList();
+        }
+
+        private SkinnedMeshRenderer ResolveSourceFaceRenderer(string path)
+        {
+            if (_config == null || _config.sourceCharacterPrefab == null || string.IsNullOrWhiteSpace(path))
+            {
+                return null;
+            }
+
+            var characterRoot = ResolveSourceCharacterRoot();
+            var target = characterRoot != null ? characterRoot.Find(path) : null;
+            if (target == null)
+            {
+                target = _config.sourceCharacterPrefab.transform.Find(path);
+            }
+
+            return target != null ? target.GetComponent<SkinnedMeshRenderer>() : null;
+        }
+
+        private bool TryBuildAdditionalFaceRendererPath(
+            SkinnedMeshRenderer renderer,
+            out string path,
+            out string error)
+        {
+            path = string.Empty;
+            error = string.Empty;
+            var characterRoot = ResolveSourceCharacterRoot();
+            if (_config == null || characterRoot == null)
+            {
+                error = "Assign a source character before adding additional face renderers.";
+                return false;
+            }
+
+            if (renderer == null)
+            {
+                error = "Select a SkinnedMeshRenderer to add.";
+                return false;
+            }
+
+            if (renderer.transform == characterRoot || renderer.transform.IsChildOf(characterRoot))
+            {
+                path = GetRelativePath(renderer.transform, characterRoot);
+            }
+            else
+            {
+                var liveRoot = ResolveLiveCharacterRoot();
+                if (liveRoot == null || (renderer.transform != liveRoot && !renderer.transform.IsChildOf(liveRoot)))
+                {
+                    error = "The selected renderer must belong to the current Nyxara character hierarchy.";
+                    return false;
+                }
+
+                path = GetRelativePath(renderer.transform, liveRoot);
+                var sourceTarget = characterRoot.Find(path);
+                if (sourceTarget == null || sourceTarget.GetComponent<SkinnedMeshRenderer>() == null)
+                {
+                    error = "The selected renderer does not exist in the current source character hierarchy.";
+                    return false;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                error = "The selected renderer must be a child of the character hierarchy.";
+                return false;
+            }
+
+            var primaryRenderer = ResolveSourceFaceRenderer(_config.preferredFaceRendererPath);
+            var primaryPath = primaryRenderer != null
+                ? GetRelativePath(primaryRenderer.transform, characterRoot)
+                : _config.preferredFaceRendererPath;
+            if (renderer == primaryRenderer ||
+                string.Equals(path, primaryPath, StringComparison.Ordinal))
+            {
+                error = "The primary face renderer cannot also be an additional face renderer.";
+                return false;
+            }
+
+            if (_config.additionalFaceRendererPaths != null)
+            {
+                foreach (var existingPath in _config.additionalFaceRendererPaths)
+                {
+                    if (string.Equals(existingPath, path, StringComparison.Ordinal) ||
+                        ResolveSourceFaceRenderer(existingPath) == renderer)
+                    {
+                        error = "That renderer is already in the additional face renderer list.";
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private Transform ResolveSourceCharacterRoot()
+        {
+            var sourcePrefab = _config != null ? _config.sourceCharacterPrefab : null;
+            if (sourcePrefab == null)
+            {
+                return null;
+            }
+
+            if (_config.sourceIsExistingRootPrefab)
+            {
+                var namedRoot = sourcePrefab.transform.Find("CharacterRoot");
+                if (namedRoot != null)
+                {
+                    return namedRoot;
+                }
+            }
+
+            return sourcePrefab.transform;
+        }
+
+        private Transform ResolveLiveCharacterRoot()
+        {
+            var studioRoot = ResolveStudioRootFromContext();
+            if (studioRoot == null)
+            {
+                return null;
+            }
+
+            var namedRoot = studioRoot.transform.Find("CharacterRoot");
+            if (namedRoot != null)
+            {
+                if (_config != null && !_config.sourceIsExistingRootPrefab && namedRoot.childCount > 0)
+                {
+                    return namedRoot.GetChild(0);
+                }
+
+                return namedRoot;
+            }
+
+            return studioRoot.transform;
         }
 
         private void DrawPathSection()
@@ -3876,7 +4180,7 @@ namespace Nyxara.AICompanion.Editor
                     continue;
                 }
 
-                var index = renderer.sharedMesh.GetBlendShapeIndex(blendshapeName);
+                var index = ArkItBlendshapeDriver.FindBlendshapeIndex(renderer.sharedMesh, blendshapeName);
                 if (index >= 0)
                 {
                     maxWeight = Mathf.Max(maxWeight, renderer.GetBlendShapeWeight(index));
